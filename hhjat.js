@@ -20,27 +20,23 @@ var circleDiv = document.querySelector(".circle");
 
 //stars ffinial style
 
-(async function () {
 
+
+(async function () {
+ 
   if (!userID) {
   userID = await generateUserID();
   localStorage.setItem("user", userID);
-}
-
-})();
-
-
-
-if(localStorage.getItem("user") == null){
+  }
+ 
+ if(localStorage.getItem("user") == null){
     localStorage.setItem("user",userID);
     GetData();
 } else {
     GetData();
 }
-
-
-(async function () {
   var rating = await GTuserDT();
+ 
   if (rating && userID) {
     var maxRating = 0;
     if (rating.rating1) {
