@@ -211,18 +211,30 @@ function dis(){
 
 }
 
-async function generateUserID() {
- 
-  const numuser = dbRef.child(`${blogTitle}/NUMBER_OF_USER`);
-  const snapshot = await numuser.once('value');
-  const value = snapshot.val() || 0;
-  await numuser.set(value + 1);
+// Obtén la referencia al nodo "userCounter" en la base de datos
+const counterRef = dbRef.child("userCounter");
 
-  const timestamp = new Date().getTime();
-  const random = Math.floor(Math.random() * 100000);
-  return `${timestamp}_${random}_${value + 1}`;
-
+function generateUserID() {
+  return counterRef.transaction((currentCount) => {
+    return (currentCount || 0) + 1;
+  }).then((transactionResult) => {
+    const userNumber = transactionResult.snapshot.val();
+    const userID = `user${userNumber}`;
+    return userID;
+  }).catch((error) => {
+    console.error("Error al generar el ID de usuario:", error);
+    return null;
+  });
 }
+
+// Ejemplo de uso
+generateUserID().then((userID) => {
+  if (userID) {
+    console.log(userID); // Resultado: "user1"
+    // Continuar con el registro del usuario en la base de datos
+  }
+});
+
 
 
 
