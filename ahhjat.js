@@ -161,6 +161,7 @@ console.log(`ERROR: ${error}`);
 }
 
 async function GTuserDT() {
+ console.log("userID:", userID);
   const user = dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`);
   const snapshot = await user.once('value');
   const value = snapshot.val();
@@ -212,28 +213,18 @@ function dis(){
 }
 
 // Obtén la referencia al nodo "userCounter" en la base de datos
-const counterRef = dbRef.child("userCounter");
+async function generateUserID() {
+  const numuser = dbRef.child(`${blogTitle}/NUMBER_OF_USER`);
+  const snapshot = await numuser.once('value');
+  const value = snapshot.val() || 0;
+  await numuser.set(value + 1);
 
-function generateUserID() {
-  return counterRef.transaction((currentCount) => {
-    return (currentCount || 0) + 1;
-  }).then((transactionResult) => {
-    const userNumber = transactionResult.snapshot.val();
-    const userID = `user${userNumber}`;
-    return userID;
-  }).catch((error) => {
-    console.error("Error al generar el ID de usuario:", error);
-    return null;
-  });
+  const timestamp = new Date().getTime();
+  const random = Math.floor(Math.random() * 100000);
+  const userID = `${timestamp}_${random}_${value + 1}`;
+
+  return userID;
 }
-
-// Ejemplo de uso
-generateUserID().then((userID) => {
-  if (userID) {
-    console.log(userID); // Resultado: "user1"
-    // Continuar con el registro del usuario en la base de datos
-  }
-});
 
 
 
