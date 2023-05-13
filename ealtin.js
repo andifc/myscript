@@ -1,4 +1,4 @@
-const firebaseConfig = {
+ const firebaseConfig = {
       
       databaseURL: decompress(fire)
     
@@ -204,13 +204,14 @@ function dis(){
 
 function generateUserID() {
 
-  if(ew == null){
+  if(!ew){
   const timestamp = new Date().getTime();
   const random = Math.floor(Math.random() * 100000);
   return `${timestamp}_${random}`;
+  } else {
+    return ew;
   }
 
-  
 }
 
 
