@@ -1,4 +1,4 @@
- const firebaseConfig = {
+const firebaseConfig = {
       
       databaseURL: decompress(fire)
     
@@ -8,7 +8,7 @@
 
 const db = firebase.database();
 const dbRef = db.ref();
-const userID = generateUserID();
+var userID = localStorage.getItem("user");
 var iter = 0;
 const stars = document.querySelectorAll(".stars-svg");
 const strs = document.querySelector(".stars");
@@ -19,6 +19,12 @@ const ld = document.querySelector(".loading");
 var circleDiv = document.querySelector(".circle");
 
 //stars ffinial style
+if (!userID) {
+  userID = generateUserID();
+  localStorage.setItem("user", userID);
+}
+
+
 if(localStorage.getItem("user") == null){
     localStorage.setItem("user",userID);
     GetData();
@@ -26,11 +32,16 @@ if(localStorage.getItem("user") == null){
     GetData();
 }
 
-var ew = localStorage.getItem("user", userID);
+
+
+
+
+
+
 
 (async function () {
   var rating = await GTuserDT();
-  if (rating && ew) {
+  if (rating && userID) {
     var maxRating = 0;
     if (rating.rating1) {
       maxRating = 1;
@@ -143,8 +154,6 @@ if (i === 0) {
   await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating5": true });
 }
 
-localStorage.setItem(postID, userID);
-
 GetData();
 } catch (error) {
 console.log(`ERROR: ${error}`);
@@ -152,7 +161,7 @@ console.log(`ERROR: ${error}`);
 }
 
 async function GTuserDT() {
-  const user = dbRef.child(`${blogTitle}/USER/${postID}/users/${ew}`);
+  const user = dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`);
   const snapshot = await user.once('value');
   const value = snapshot.val();
   return value;
@@ -204,13 +213,9 @@ function dis(){
 
 function generateUserID() {
 
-  if(!ew){
   const timestamp = new Date().getTime();
   const random = Math.floor(Math.random() * 100000);
-  return `${timestamp}_${random}`;
-  } else {
-    return ew;
-  }
+  return `→ ${timestamp}_${random} ←`;
 
 }
 
@@ -219,3 +224,4 @@ function generateUserID() {
 /*No error with offline*/
 
 window.addEventListener("offline",function(){ firebase.database().goOffline(); }),window.addEventListener("online",function(){ firebase.database().goOnline(); }); 
+
