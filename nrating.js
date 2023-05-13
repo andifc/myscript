@@ -67,11 +67,11 @@ var ew = localStorage.getItem("user", userID);
 async function GetData() {
   try {
     const [Rating1, Rating2, Rating3, Rating4, Rating5] = await Promise.all([
-      dbRef.child(`${blogTitle}_${blogID}/${postID}rating1`).once('value'),
-      dbRef.child(`${blogTitle}_${blogID}/${postID}rating2`).once('value'),
-      dbRef.child(`${blogTitle}_${blogID}/${postID}rating3`).once('value'),
-      dbRef.child(`${blogTitle}_${blogID}/${postID}rating4`).once('value'),
-      dbRef.child(`${blogTitle}_${blogID}/${postID}rating5`).once('value')
+      dbRef.child(`${blogTitle}/RATING/${postID}/rating1`).once('value'),
+      dbRef.child(`${blogTitle}/RATING/${postID}/rating2`).once('value'),
+      dbRef.child(`${blogTitle}/RATING/${postID}/rating3`).once('value'),
+      dbRef.child(`${blogTitle}/RATING/${postID}/rating4`).once('value'),
+      dbRef.child(`${blogTitle}/RATING/${postID}/rating5`).once('value')
     ]);
 
     const rt1 = Rating1.val() || 0;
@@ -112,35 +112,35 @@ if (iter == 0) {iter++} else {return;}
 try {
 
 if (i === 0) {
-  const ratingRef = dbRef.child(`${blogTitle}_${blogID}/${postID}rating1`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating1`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}_${blogID}/${postID}users/${userID}`).set({ "rating1": true });
+  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating1": true });
 } else if (i === 1) {
-  const ratingRef = dbRef.child(`${blogTitle}_${blogID}/${postID}rating2`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating2`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}_${blogID}/${postID}users/${userID}`).set({ "rating2": true });
+  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating2": true });
 } else if (i === 2) {
-  const ratingRef = dbRef.child(`${blogTitle}_${blogID}/${postID}rating3`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating3`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}_${blogID}/${postID}users/${userID}`).set({ "rating3": true });
+  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating3": true });
 } else if (i === 3) {
-  const ratingRef = dbRef.child(`${blogTitle}_${blogID}/${postID}rating4`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating4`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}_${blogID}/${postID}users/${userID}`).set({ "rating4": true });
+  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating4": true });
 } else if (i === 4) {
-  const ratingRef = dbRef.child(`${blogTitle}_${blogID}/${postID}rating5`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating5`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}_${blogID}/${postID}users/${userID}`).set({ "rating5": true });
+  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating5": true });
 }
 
 localStorage.setItem(postID, userID);
@@ -152,7 +152,7 @@ console.log(`ERROR: ${error}`);
 }
 
 async function GTuserDT() {
-  const user = dbRef.child(`${blogTitle}_${blogID}/${postID}users/${ew}`);
+  const user = dbRef.child(`${blogTitle}/USER/${postID}/users/${ew}`);
   const snapshot = await user.once('value');
   const value = snapshot.val();
   return value;
@@ -218,4 +218,3 @@ function generateUserID() {
 /*No error with offline*/
 
 window.addEventListener("offline",function(){ firebase.database().goOffline(); }),window.addEventListener("online",function(){ firebase.database().goOnline(); }); 
-
