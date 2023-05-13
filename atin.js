@@ -1,4 +1,5 @@
-const firebaseConfig = {
+
+    const firebaseConfig = {
       
       databaseURL: decompress(fire)
     
@@ -31,12 +32,6 @@ if(localStorage.getItem("user") == null){
 } else {
     GetData();
 }
-
-
-
-
-
-
 
 
 (async function () {
@@ -211,11 +206,17 @@ function dis(){
 
 }
 
-function generateUserID() {
+async function generateUserID() {
+ 
+  const numuser = dbRef.child(`${blogTitle}/NUMBER_OF_USER`);
+  const snapshot = await numuser.once('value');
+  const value = snapshot.val() || 0;
+  await numuser.set(value + 1);
 
   const timestamp = new Date().getTime();
   const random = Math.floor(Math.random() * 100000);
-  return `→ ${timestamp}_${random} ←`;
+  return `${timestamp}_${random}_${value + 1}`;
+
 
 }
 
@@ -224,4 +225,3 @@ function generateUserID() {
 /*No error with offline*/
 
 window.addEventListener("offline",function(){ firebase.database().goOffline(); }),window.addEventListener("online",function(){ firebase.database().goOnline(); }); 
-
