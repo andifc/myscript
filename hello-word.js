@@ -1,4 +1,4 @@
- const firebaseConfig = {
+const firebaseConfig = {
       
       databaseURL: decompress(fire)
     
@@ -74,11 +74,11 @@ var circleDiv = document.querySelector(".circle");
 async function GetData() {
   try {
     const [Rating1, Rating2, Rating3, Rating4, Rating5] = await Promise.all([
-      dbRef.child(`${blogTitle}/RATING/${postID}/rating1`).once('value'),
-      dbRef.child(`${blogTitle}/RATING/${postID}/rating2`).once('value'),
-      dbRef.child(`${blogTitle}/RATING/${postID}/rating3`).once('value'),
-      dbRef.child(`${blogTitle}/RATING/${postID}/rating4`).once('value'),
-      dbRef.child(`${blogTitle}/RATING/${postID}/rating5`).once('value')
+      dbRef.child(`${blogTitle}/RATINGS/${postID}/rating1`).once('value'),
+      dbRef.child(`${blogTitle}/RATINGS/${postID}/rating2`).once('value'),
+      dbRef.child(`${blogTitle}/RATINGS/${postID}/rating3`).once('value'),
+      dbRef.child(`${blogTitle}/RATINGS/${postID}/rating4`).once('value'),
+      dbRef.child(`${blogTitle}/RATINGS/${postID}/rating5`).once('value')
     ]);
 
     const rt1 = Rating1.val() || 0;
@@ -119,35 +119,35 @@ if (iter == 0) {iter++} else {return;}
 try {
 
 if (i === 0) {
-  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating1`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATINGS/${postID}/rating1`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating1": true });
+  await dbRef.child(`${blogTitle}/USERS/${userID}/${postID}`).set({ "rating1": true });
 } else if (i === 1) {
-  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating2`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATINGS/${postID}/rating2`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating2": true });
+  await dbRef.child(`${blogTitle}/USERS/${userID}/${postID}`).set({ "rating2": true });
 } else if (i === 2) {
-  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating3`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATINGS/${postID}/rating3`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating3": true });
+  await dbRef.child(`${blogTitle}/USERS/${userID}/${postID}`).set({ "rating3": true });
 } else if (i === 3) {
-  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating4`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATINGS/${postID}/rating4`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating4": true });
+  await dbRef.child(`${blogTitle}/USERS/${userID}/${postID}`).set({ "rating4": true });
 } else if (i === 4) {
-  const ratingRef = dbRef.child(`${blogTitle}/RATING/${postID}/rating5`);
+  const ratingRef = dbRef.child(`${blogTitle}/RATINGS/${postID}/rating5`);
   const snapshot = await ratingRef.once('value');
   const currentValue = snapshot.val() || 0;
   await ratingRef.set(currentValue + 1);
-  await dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`).set({ "rating5": true });
+  await dbRef.child(`${blogTitle}/USERS/${userID}/${postID}`).set({ "rating5": true });
 }
 
 GetData();
@@ -157,8 +157,8 @@ console.log(`ERROR: ${error}`);
 }
 
 async function GTuserDT() {
- console.log("userID:", userID);
-  const user = dbRef.child(`${blogTitle}/USER/${postID}/users/${userID}`);
+  console.log(`UserID: ${userID}`)
+  const user = dbRef.child(`${blogTitle}/USERS/${userID}/${postID}`);
   const snapshot = await user.once('value');
   const value = snapshot.val();
   return value;
@@ -210,7 +210,7 @@ function dis(){
 
 // Obtén la referencia al nodo "userCounter" en la base de datos
 async function generateUserID() {
-  const numuser = dbRef.child(`${blogTitle}/NUMBER_OF_USER`);
+  const numuser = dbRef.child(`${blogTitle}/NUMBER_OF_USERS`);
   const snapshot = await numuser.once('value');
   const value = snapshot.val() || 0;
   await numuser.set(value + 1);
@@ -227,5 +227,4 @@ async function generateUserID() {
 
 /*No error with offline*/
 
-window.addEventListener("offline",function(){ firebase.database().goOffline(); }),window.addEventListener("online",function(){ firebase.database().goOnline(); }); 
-
+window.addEventListener("offline",function(){ firebase.database().goOffline(); }),window.addEventListener("online",function(){ firebase.database().goOnline(); });
