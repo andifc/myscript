@@ -28,13 +28,9 @@ var circleDiv = document.querySelector(".circle");
   userID = await generateUserID();
   localStorage.setItem("user", userID);
   }
- 
- if(localStorage.getItem("user") == null){
-    localStorage.setItem("user",userID);
+      
     GetData();
-} else {
-    GetData();
-}
+
   var rating = await GTuserDT();
  
   if (rating && userID) {
