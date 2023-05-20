@@ -7,7 +7,7 @@ var allahref = document.getElementsByTagName("a");
 for (var c = 0; c < allahref.length; c++) {
   if (allahref[c].hostname !== "" && !allowedHostnames.includes(allahref[c].hostname)) {
     var encode = window.btoa(allahref[c].href);
-    allahref[c].href = "https://sssssssswqqz.blogspot.com/p/rdn.html?&&link=" + encode;
+    allahref[c].href = "/p/rdn.html?&&link=" + encode;
   }
 }
 
