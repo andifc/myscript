@@ -2,7 +2,7 @@
 
 Made by Andi. All rights reserved ©
 
-V1.1
+Redirector - V1.1
 */
 
 
