@@ -1,7 +1,7 @@
 const firebaseConfig = {
       
-      databaseURL: decompress(fire),
-      ID: 123
+      apiKey: "AIzaSyAsL3rew4VLDe6zleGcwE3VctkM-sFBSK4",
+      databaseURL: decompress(fire)
       
       };
       
