@@ -1,8 +1,7 @@
 const firebaseConfig = {
       
-      databaseURL: decompress(fire),
-      apiKey: "AIzaSyAsL3rew4VLDe6zleGcwE3VctkM-sFBSK4"
-    
+      databaseURL: decompress(fire)
+      
       };
       
       firebase.initializeApp(firebaseConfig);
