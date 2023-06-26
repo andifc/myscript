@@ -5,7 +5,6 @@ v1.0
 */
 
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyC8mYBsrNbD7qvW-0ArQEuJzrrGsWLSEn4",
     authDomain: "shortlink-28caf.firebaseapp.com",
@@ -19,16 +18,16 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-var msg = Get(".msg");
-var content = Get(".content");
-var input = Get(".int");
-var btn = Get(".ch");
-var form = Get(".s");
-var shorts = Get(".short");
+var msg = document.querySelector(".msg");
+var content = document.querySelector(".content");
+var input = document.querySelector(".int");
+var btn = document.querySelector(".ch");
+var form = document.querySelector(".s");
+var shorts = document.querySelector(".short");
 var url = window.location.href;
 var local = localStorage;
 var debounce = true;
-var livelinks = Get(".liv");
+var livelinks = document.querySelector(".liv");
 const regex = /^[a-zA-Z0-9]+$/;
 
 window.onload = function() {
@@ -47,8 +46,6 @@ window.onload = function() {
 }
 
 
-if(form) {
-
 form.onsubmit = function (ev) {
   ev.preventDefault();
   if(debounce && input.value.length !== 0){
@@ -57,14 +54,13 @@ form.onsubmit = function (ev) {
     const codigo = gencode;
     guardarURL(link, codigo);
     set(`${url}/${codigo}`);
-    get_live_links();
     setTimeout(() =>{debounce = false;},1000)
   } else {
     debounce = true;
     input.value = "";
   }
 }
-}
+
   // Función para obtener la URL asociada a un código en Firestore
 async function obtenerURL(codigo) {
     try {
@@ -180,9 +176,7 @@ function set(url) {
     const collectionRef = db.collection('Enlaces');
     const querySnapshot = await collectionRef.get() || 0;
     var linksHorts = querySnapshot.size;
-       if(livelinks) {
-        livelinks.innerHTML = linksHorts;
-       }
+    livelinks.innerHTML = linksHorts;
   } catch (error) {
     console.error('Error al obtener el número de documentos:', error);
   }
