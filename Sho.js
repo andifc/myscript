@@ -180,7 +180,9 @@ function set(url) {
     const collectionRef = db.collection('Enlaces');
     const querySnapshot = await collectionRef.get() || 0;
     var linksHorts = querySnapshot.size;
-    livelinks.innerHTML = linksHorts;
+       if(livelinks) {
+        livelinks.innerHTML = linksHorts;
+       }
   } catch (error) {
     console.error('Error al obtener el número de documentos:', error);
   }
