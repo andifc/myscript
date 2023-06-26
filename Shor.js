@@ -47,6 +47,8 @@ window.onload = function() {
 }
 
 
+if(form) {
+
 form.onsubmit = function (ev) {
   ev.preventDefault();
   if(debounce && input.value.length !== 0){
@@ -62,7 +64,7 @@ form.onsubmit = function (ev) {
     input.value = "";
   }
 }
-
+}
   // Función para obtener la URL asociada a un código en Firestore
 async function obtenerURL(codigo) {
     try {
