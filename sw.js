@@ -34,7 +34,7 @@ async function regWorker () {
       }).then(
 
         sub => {
-          fetch("/welcome", {
+          fetch("https://test-andiyt1.vercel.app/welcome", {
             method: "POST",
             body: JSON.stringify(sub),
             headers: { "content-type": "application/json" }
