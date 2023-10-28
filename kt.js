@@ -11,7 +11,7 @@ const rp = Get(".respuestas");
 const ld = Get(".loading");
 const pcont = Get(".contp");
 
-btn.addEventListener('click', function() {
+btn.onclick = function() {
     var inputUrl = int.value;
     if (isValidUrl(inputUrl)) {
         //http://localhost:3000/kahoot/get?id=
