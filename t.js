@@ -31,7 +31,7 @@ btn.onclick = function() {
     } else {
         toast("Porfavor ingresa una url valida.");
     }
-});
+};
 
 const toast = msg => {
     const $toast = document.querySelectorAll(".toast")[0]
